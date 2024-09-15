@@ -1,0 +1,47 @@
+// font faces
+@font-face {
+  font-family: "Lango Px Fat Regular";
+  src: url(../fonts/Pixilate\ -\ Lango\ Px\ Fat.otf);
+}
+
+@font-face {
+  font-family: "Lango Px Bold";
+  src: url(../fonts/Pixilate\ -\ Lango\ Px\ Bold.otf);
+}
+
+@font-face {
+  font-family: "Planer Regular";
+  src: url(../fonts/The\ Northern\ Block\ -\ Planer-Regular.otf);
+}
+
+@font-face {
+  font-family: "Planer DemiBold Regular";
+  src: url(../fonts/The\ Northern\ Block\ -\ Planer-DemiBold.otf);
+}
+
+.heading-1 {
+  font-family: "Lango Px Fat Regular";
+  font-size: 4rem;
+  color: $text-color-dark;
+  text-transform: uppercase;
+
+  @media only screen and (min-width: $bp-medium) {
+    font-size: 5rem;
+  }
+}
+
+.heading-2 {
+  font-family: "Lango Px Fat Regular";
+  font-size: 4rem;
+  color: $text-color-light;
+}
+
+.heading-3 {
+  font-size: 1.5rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+
+  @media only screen and (min-width: $bp-ultrawide) {
+    font-size: 1.7rem;
+  }
+}

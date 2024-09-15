@@ -1,0 +1,151 @@
+.tracks__container {
+  width: 100%;
+  background-image: linear-gradient(to bottom, $bg-header 1%, $bg-color);
+}
+
+.track {
+  width: 90%;
+  margin: 0 auto;
+  background-size: 100%;
+  background-position-y: 90%;
+  background-position-x: center;
+  background-repeat: no-repeat;
+
+  display: grid;
+  grid-template-rows: min-content 5rem min-content;
+
+  @media only screen and (min-width: $bp-medium) {
+    width: 80%;
+    background-position-y: bottom;
+  }
+
+  @media only screen and (min-width: $bp-big) {
+    width: 70%;
+    background-position-y: bottom;
+  }
+
+  @media only screen and (min-width: $bp-biggest) {
+    width: 60%;
+    margin-bottom: 2rem;
+  }
+
+  &--1 {
+    background-image: url(../public/img/track-1.png);
+  }
+
+  &--2 {
+    background-image: url(../public/img/track-2.png);
+  }
+
+  &--3 {
+    background-image: url(../public/img/track-3.png);
+  }
+
+  &--4 {
+    background-image: url(../public/img/track-4.png);
+  }
+
+  // track container layout
+  &__row-top {
+    grid-row: 1 / 2;
+    justify-self: end;
+  }
+
+  &__row-middle {
+    grid-row: 2 / 3;
+
+    display: flex;
+    align-items: center;
+  }
+
+  &__row-bottom {
+    grid-row: 3 / 4;
+
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__icons {
+    display: flex;
+    gap: 1rem;
+
+    @media only screen and (min-width: $bp-biggest) {
+      gap: 1.5rem;
+    }
+
+    &-icon {
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+    }
+  }
+}
+
+// sleigh slider styles
+.track__slider {
+  // default style reset
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+}
+
+input[type="range"] {
+  &::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 8rem; // 14
+    height: 5rem; // 8
+    background-image: url(../public/img/sleigh.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    @media only screen and (min-width: $bp-small) {
+      width: 10rem;
+      height: 7rem;
+      margin-top: -1.5rem;
+    }
+
+    @media only screen and (min-width: $bp-biggest) {
+      width: 12rem;
+      height: 7rem;
+      margin-top: -3rem;
+    }
+
+    @media only screen and (min-width: $bp-biggest) {
+      margin-top: -4rem;
+    }
+  }
+
+  &::-moz-range-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 8rem;
+    height: 5rem;
+    background-image: url(../public/img/sleigh.png);
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: 0;
+
+    @media only screen and (min-width: $bp-small) {
+      width: 10rem;
+      height: 7rem;
+      margin-top: -1.5rem;
+    }
+
+    @media only screen and (min-width: $bp-biggest) {
+      width: 12rem;
+      height: 7rem;
+      margin-top: -3rem;
+    }
+
+    @media only screen and (min-width: $bp-biggest) {
+      margin-top: -4rem;
+    }
+  }
+}
