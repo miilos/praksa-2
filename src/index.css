@@ -10,7 +10,12 @@ html {
 
 body {
   font-family: "Planer Regular";
-  background-color: #d3e8f4;
+  background-image: linear-gradient(to bottom, #a4c2d1 10%, transparent);
+}
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
 }
 
 @font-face {
@@ -60,7 +65,7 @@ body {
 
 .tracks__container {
   width: 100%;
-  background-image: linear-gradient(to bottom, #f3fbff 1%, #d3e8f4);
+  background-image: linear-gradient(to bottom, #f3fbff 1%, transparent);
 }
 
 .track {

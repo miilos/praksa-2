@@ -31,40 +31,44 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header />
+      <div className="container">
+        <Header />
 
-      <div className="tracks__container">
-        {foundations.map((curr) => (
-          <Track
-            foundationName={curr.name}
-            key={`Foundation ${curr.id}`}
-            trackNo={curr.id}
-            modalText={curr.text}
-          />
-        ))}
+        <div className="tracks__container">
+          {foundations.map((curr) => (
+            <Track
+              foundationName={curr.name}
+              key={`Foundation ${curr.id}`}
+              trackNo={curr.id}
+              modalText={curr.text}
+            />
+          ))}
+        </div>
+
+        <div className="buttons">
+          <Button cssClass={"btn btn-secondary"} onClick={resetDonations}>
+            Visszaalitas
+          </Button>
+          <Button
+            cssClass={`btn btn-primary ${
+              totalDonationsAmount === donationCap
+                ? ""
+                : "btn-primary--disabled"
+            }`}
+            onClick={submitDonations}
+            disabled={totalDonationsAmount < donationCap}
+          >
+            Elkuldom
+          </Button>
+        </div>
+
+        <Modal
+          title={"Donation successful!"}
+          text={"Thank you!"}
+          cssClass={`modal-${activeModal === 4 ? "4" : ""}__show`}
+          onClick={hideModal}
+        />
       </div>
-
-      <div className="buttons">
-        <Button cssClass={"btn btn-secondary"} onClick={resetDonations}>
-          Visszaalitas
-        </Button>
-        <Button
-          cssClass={`btn btn-primary ${
-            totalDonationsAmount === donationCap ? "" : "btn-primary--disabled"
-          }`}
-          onClick={submitDonations}
-          disabled={totalDonationsAmount < donationCap}
-        >
-          Elkuldom
-        </Button>
-      </div>
-
-      <Modal
-        title={"Donation successful!"}
-        text={"Thank you!"}
-        cssClass={`modal-${activeModal === 4 ? "4" : ""}__show`}
-        onClick={hideModal}
-      />
     </div>
   );
 }

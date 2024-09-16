@@ -10,5 +10,14 @@ html {
 
 body {
   font-family: $font-text;
-  background-color: $bg-color;
+  background-image: linear-gradient(
+    to bottom,
+    $bg-gradient-start 10%,
+    transparent
+  );
+}
+
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
 }
