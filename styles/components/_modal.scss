@@ -1,9 +1,10 @@
 .modal {
-  width: 70vw;
-  height: 70vh;
+  width: 30rem;
+  height: 40rem;
   background-color: rgba($modal-bg-color, 0.9);
   border-radius: 2rem;
   color: #fff;
+  z-index: 10;
 
   position: fixed;
   top: 50%;
@@ -25,8 +26,12 @@
 
   &__text {
     width: 80%;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     text-align: center;
+
+    @media only screen and (min-width: $bp-small) {
+      font-size: 1.5rem;
+    }
   }
 
   &__close-btn {

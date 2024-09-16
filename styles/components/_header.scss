@@ -17,6 +17,10 @@
       font-size: 7rem;
       padding: 5rem 0;
     }
+
+    @media only screen and (min-width: $bp-ultrawide) {
+      font-size: 9rem;
+    }
   }
 
   &__img {

@@ -1,32 +1,17 @@
-import {
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Button from "./components/Button";
-import { Track, activeModalState } from "./components/Track";
+import Track from "./components/Track";
 import Header from "./components/Header";
-import { foundations } from "./foundations";
+import { foundations } from "./utils/foundations";
 import Modal from "./components/Modal";
+import activeModalState from "./state/modalState";
+import {
+  donationsState,
+  donationsSelector,
+  donationCap,
+} from "./state/donationState";
 
-const donationsState = atom({
-  key: "donationsState",
-  default: new Array(4).fill(0),
-});
-
-const donationsSelector = selector({
-  key: "donationsSelector",
-  get: ({ get }) => {
-    const donations = get(donationsState);
-    return donations.reduce((acc, curr) => acc + curr, 0);
-  },
-});
-
-const donationCap = 3000000;
-
-function App() {
+export default function App() {
   const setDonations = useSetRecoilState(donationsState);
   const totalDonationsAmount = useRecoilValue(donationsSelector);
   const [activeModal, setActiveModal] = useRecoilState(activeModalState);
@@ -83,5 +68,3 @@ function App() {
     </div>
   );
 }
-
-export { App, donationsState, donationsSelector, donationCap };

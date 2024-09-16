@@ -1,13 +1,13 @@
-import { atom, useRecoilState, useRecoilValue } from "recoil";
-import { donationsState, donationsSelector, donationCap } from "../App";
+import { useRecoilState, useRecoilValue } from "recoil";
 import Modal from "./Modal";
+import activeModalState from "../state/modalState";
+import {
+  donationsState,
+  donationsSelector,
+  donationCap,
+} from "../state/donationState";
 
-const activeModalState = atom({
-  key: "activeModalState",
-  default: -1,
-});
-
-function Track({ foundationName, trackNo, modalText }) {
+export default function Track({ foundationName, trackNo, modalText }) {
   const [donations, setDonations] = useRecoilState(donationsState);
   const [activeModal, setActiveModal] = useRecoilState(activeModalState);
   const donation = donations.at(trackNo);
@@ -72,5 +72,3 @@ function Track({ foundationName, trackNo, modalText }) {
     </>
   );
 }
-
-export { Track, activeModalState };
