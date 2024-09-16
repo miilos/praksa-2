@@ -12,7 +12,8 @@ body {
   font-family: $font-text;
   background-image: linear-gradient(
     to bottom,
-    $bg-gradient-start 10%,
+    $bg-gradient-start 15%,
+    transparent,
     transparent
   );
 }

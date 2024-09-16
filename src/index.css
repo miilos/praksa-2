@@ -10,7 +10,7 @@ html {
 
 body {
   font-family: "Planer Regular";
-  background-image: linear-gradient(to bottom, #a4c2d1 10%, transparent);
+  background-image: linear-gradient(to bottom, #a4c2d1 15%, transparent, transparent);
 }
 
 .container {
