@@ -13,9 +13,9 @@ body {
   background-image: linear-gradient(
     to bottom,
     $bg-gradient-start 15%,
-    transparent,
-    transparent
+    $bg-color
   );
+  overflow-x: hidden;
 }
 
 .container {

@@ -1,6 +1,13 @@
 .tracks__container {
   width: 100%;
-  background-image: linear-gradient(to bottom, $bg-header 1%, transparent);
+  background-image: linear-gradient(
+    to bottom,
+    $bg-header 10%,
+    transparent,
+    transparent,
+    transparent,
+    transparent
+  );
 }
 
 .track {

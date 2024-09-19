@@ -1,4 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
+
 import Modal from "./Modal";
 import activeModalState from "../state/modalState";
 import {
@@ -10,14 +11,16 @@ import {
 export default function Track({ foundationName, trackNo, modalText }) {
   const [donations, setDonations] = useRecoilState(donationsState);
   const [activeModal, setActiveModal] = useRecoilState(activeModalState);
-  const donation = donations.at(trackNo);
+  const donation = donations[foundationName];
   const totalDonationAmount = useRecoilValue(donationsSelector);
 
-  function updateDonations(amount, trackNo) {
+  function updateDonations(amount) {
     if (totalDonationAmount - donation + amount <= donationCap)
-      setDonations((currDonations) =>
-        currDonations.map((curr, i) => (i === trackNo ? amount : curr))
-      );
+      setDonations((currDonations) => {
+        const newDonations = { ...currDonations };
+        newDonations[foundationName] = amount;
+        return newDonations;
+      });
   }
 
   function showModal() {
@@ -41,7 +44,7 @@ export default function Track({ foundationName, trackNo, modalText }) {
           step={250000}
           value={donation}
           onChange={(e) => {
-            updateDonations(Number(e.target.value), trackNo);
+            updateDonations(Number(e.target.value));
           }}
         />
 
