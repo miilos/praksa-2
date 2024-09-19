@@ -41,7 +41,7 @@ export default function Root() {
     global google gapi
     gapi.load("client", async () => {
       await gapi.client.init({
-        apiKey: "AIzaSyDZ_1vI399VdgNcUaiW_MblqB52qhXiVgs",
+        apiKey: "API_KEY",
         discoveryDocs: [
           "https://sheets.googleapis.com/$discovery/rest?version=v4",
         ],
@@ -80,7 +80,7 @@ export default function Root() {
       // get access token to write data to google sheets
       /* const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id:
-        "1007844988564-95evadpcelputubvp925oedi2ub27lbb.apps.googleusercontent.com",
+        "CLIENT_ID",
       scope: "https://www.googleapis.com/auth/spreadsheets",
       callback: async (res) => {
         console.log("tokenClient response: " + res);
@@ -149,7 +149,7 @@ export default function Root() {
 
       try {
         await gapi.client.sheets.spreadsheets.values.append({
-          spreadsheetId: "1_yNyq-WAS7IC_ppNlRt7vEetXQ7moakPrRwhOwKDr1I",
+          spreadsheetId: "SPREADSHEET_ID",
           range: "A2:F2",
           resource: body,
           valueInputOption: "USER_ENTERED",
