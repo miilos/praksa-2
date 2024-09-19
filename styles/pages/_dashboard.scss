@@ -46,6 +46,10 @@
         background-color: $bg-header;
       }
 
+      & th {
+        text-align: center;
+      }
+
       & th,
       & td {
         padding: 1rem;

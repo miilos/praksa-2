@@ -10,7 +10,7 @@ const donationRequestsData = atom({
       "Noe allatotthon alapitvany": 0,
       "Szent Istvan Kiraly zenei alapitvany": 0,
     }, // ukupne donacije za svaku fondaciju
-    allRequests: [], // niz objekata: { date: datum requesta, amounts: kolicine za svaku fondaciju }
+    allRequests: [], // niz objekata: { date: datum requesta, amounts: kolicine za svaku fondaciju, ip }
   },
   effects: [
     ({ setSelf }) => {

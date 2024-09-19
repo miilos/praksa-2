@@ -74,11 +74,11 @@ export default function Root() {
   async function submitDonations() {
     const reqIp = await getIpAdress();
 
-    if (reqIp === timedOutIp) {
+    /* if (reqIp === timedOutIp) {
       setActiveModal(7);
-    } else {
-      // get access token to write data to google sheets
-      /* const tokenClient = google.accounts.oauth2.initTokenClient({
+    } else { */
+    // get access token to write data to google sheets
+    /* const tokenClient = google.accounts.oauth2.initTokenClient({
       client_id:
         "CLIENT_ID",
       scope: "https://www.googleapis.com/auth/spreadsheets",
@@ -98,50 +98,51 @@ export default function Root() {
       });
     } */
 
-      //if (clientToken !== null) {
+    //if (clientToken !== null) {
 
-      // update data object for dashboard analytics page
-      setDonationRequestData((curr) => {
-        let newObj = JSON.parse(JSON.stringify(curr));
+    // update data object for dashboard analytics page
+    setDonationRequestData((curr) => {
+      let newObj = JSON.parse(JSON.stringify(curr));
 
-        newObj.totalReqs++;
-        newObj.totalRaisedAmount = calcTotalDonations(curr.totalRaisedAmount);
-        newObj.allRequests = [
-          ...curr.allRequests,
-          {
-            date: new Date().toLocaleString(),
-            amounts: foundations.map((curr) => donations[curr.name]),
-          },
-        ];
-
-        localStorage.setItem("donation-req-data", JSON.stringify(newObj));
-
-        return newObj;
-      });
-
-      // update google sheet
-      const reqTime = new Date().toLocaleTimeString();
-      const body = [
+      newObj.totalReqs++;
+      newObj.totalRaisedAmount = calcTotalDonations(curr.totalRaisedAmount);
+      newObj.allRequests = [
+        ...curr.allRequests,
         {
-          ...donations,
-          date: reqTime,
+          date: new Date().toLocaleString(),
+          amounts: { ...donations },
           ip: reqIp,
         },
       ];
 
-      await fetch("https://sheetdb.io/api/v1/95ntroz7ueba2", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: body,
-        }),
-      });
+      localStorage.setItem("donation-req-data", JSON.stringify(newObj));
 
-      // build request and write data to sheets
-      /* const reqIp = await getIpAdress();
+      return newObj;
+    });
+
+    // update google sheet
+    const reqTime = new Date().toLocaleTimeString();
+    const body = [
+      {
+        ...donations,
+        date: reqTime,
+        ip: reqIp,
+      },
+    ];
+
+    await fetch("https://sheetdb.io/api/v1/95ntroz7ueba2", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        data: body,
+      }),
+    });
+
+    // build request and write data to sheets
+    /* const reqIp = await getIpAdress();
       const reqTime = new Date().toLocaleTimeString();
       const body = {
         values: [[...donations, reqTime, reqIp]],
@@ -158,14 +159,14 @@ export default function Root() {
         console.log(err);
       } */
 
-      // reset donation and modal state for this page
-      setActiveModal(4);
-      resetDonations();
+    // reset donation and modal state for this page
+    setActiveModal(4);
+    resetDonations();
 
-      // time out ip
-      setTimedOutIp(reqIp);
-      //}
-    }
+    // time out ip
+    setTimedOutIp(reqIp);
+    //}
+    //}
   }
 
   async function getIpAdress() {

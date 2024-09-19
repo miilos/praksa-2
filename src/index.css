@@ -284,6 +284,15 @@ input[type=range]::-moz-range-thumb {
   text-decoration: none;
 }
 
+.delete_btn {
+  color: #0d304b;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.delete_btn:hover {
+  color: #ff6363;
+}
+
 .modal {
   width: 30rem;
   height: 40rem;
@@ -461,6 +470,9 @@ input[type=range]::-moz-range-thumb {
 }
 .dashboard__general-info-donation-table tr:first-child {
   background-color: #f3fbff;
+}
+.dashboard__general-info-donation-table th {
+  text-align: center;
 }
 .dashboard__general-info-donation-table th, .dashboard__general-info-donation-table td {
   padding: 1rem;

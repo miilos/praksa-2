@@ -73,3 +73,14 @@
     text-decoration: none;
   }
 }
+
+// btn za brisanje iz sheetsa
+.delete_btn {
+  color: $modal-bg-color;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    color: $del-btn-color;
+  }
+}

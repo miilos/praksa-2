@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
-import { PieChart } from "@mui/x-charts";
 
 import { donationRequestsData } from "../state/dashboardData";
 import { foundations } from "../utils/foundations";
 import Button from "../components/Button";
-import Input from "../components/Input";
 import Modal from "../components/Modal";
 import activeModalState from "../state/modalState";
-import useWindowSize from "../hooks/useWindowSize";
+import Chart from "../components/Chart";
 
 export default function Dashboard() {
   const donationData = useRecoilValue(donationRequestsData);
@@ -23,10 +21,43 @@ export default function Dashboard() {
 
   const [activeModal, setActiveModal] = useRecoilState(activeModalState);
 
-  const chartPalette = ["#13647a", "#55d2e3", "#f3fbff", "#0d304b"];
+  function getTableHeaders() {
+    const headers = [];
 
-  // custom hook koji vraca dimenzije prozora, potreban je zato sto je chart svg i legenda se moze sakriti jedino u js
-  const { width } = useWindowSize();
+    foundations.forEach((curr) => headers.push(curr.name));
+    headers.push("date", "ip", " ");
+
+    return headers;
+  }
+
+  function handleDeleteFromSheets(dateVal) {
+    const deleteVal = dateVal.split(",").at(1).trim();
+
+    deleteFromSheets(deleteVal);
+  }
+
+  // funkcija koja primi objekat u kom su svi podaci o requestu i ubaci ih u niz koji se moze renderovati
+  function getAllProps(obj) {
+    const allVals = [];
+
+    // donacije svakoj fondaciji
+    foundations.forEach((curr) => allVals.push(obj.amounts[curr.name]));
+
+    // datum i ip requesta (stariji objekti u nizu nemaju ip)
+    allVals.push(obj.date, obj?.ip);
+
+    // button za brisanje iz sheetsa
+    allVals.push(
+      <span
+        className="delete_btn"
+        onClick={() => handleDeleteFromSheets(obj.date)}
+      >
+        Delete from Sheets
+      </span>
+    );
+
+    return allVals;
+  }
 
   // pagination u tabeli
   function goToNextPage() {
@@ -64,48 +95,23 @@ export default function Dashboard() {
     setSortDirection("asc");
   }
 
-  // racunanje procenata za pie chart
-  function calculatePercentages() {
-    const percentages = [];
-    const totalAmount = Object.values(donationData.totalRaisedAmount).reduce(
-      (acc, curr) => acc + curr,
-      0
-    );
+  async function deleteFromSheets(dateVal) {
+    try {
+      const res = await fetch(
+        `https://sheetdb.io/api/v1/95ntroz7ueba2/date/${dateVal}`,
+        {
+          method: "DELETE",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-    for (const [key, value] of Object.entries(donationData.totalRaisedAmount)) {
-      const pct = (value / totalAmount) * 100;
-
-      // chart komponenta koristi ova property imena
-      percentages.push({
-        label: key,
-        value: pct,
-      });
-    }
-
-    return percentages;
-  }
-
-  async function deleteFromSheets(input) {
-    const [column, value] = input.split(",").map((curr) => curr.trim());
-
-    if (column && value) {
-      try {
-        await fetch(
-          `https://sheetdb.io/api/v1/95ntroz7ueba2/${column}/${value}`,
-          {
-            method: "DELETE",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        setActiveModal(5);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
+      const data = await res.json();
+      if (data.error) throw new Error("already deleted");
+      else setActiveModal(5);
+    } catch (err) {
       setActiveModal(6);
     }
   }
@@ -165,8 +171,8 @@ export default function Dashboard() {
             <table className="dashboard__general-info-donation-table">
               <tbody>
                 <tr>
-                  {foundations.map((curr, i) => (
-                    <th key={`th-${i}`}>{curr.name}</th>
+                  {getTableHeaders().map((curr, i) => (
+                    <th key={`th-${i}`}>{curr}</th>
                   ))}
                 </tr>
 
@@ -174,7 +180,7 @@ export default function Dashboard() {
                   .slice(pageStartIndex, pageStartIndex + 10)
                   .map((curr, i) => (
                     <tr key={`tr-${i}`}>
-                      {curr.amounts.map((amm, i) => (
+                      {getAllProps(curr).map((amm, i) => (
                         <td key={`td-${i}`}>{amm}</td>
                       ))}
                     </tr>
@@ -217,38 +223,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="chart-container">
-            <PieChart
-              colors={chartPalette}
-              series={[
-                {
-                  data: calculatePercentages(),
-                },
-              ]}
-              height={200}
-              slotProps={{
-                legend: {
-                  hidden: width < 600,
-                  position: {
-                    vertical: "middle",
-                    horizontal: "right",
-                  },
-                },
-              }}
-            />
-          </div>
-
-          <div className="delete-input-container">
-            <h3 className="heading-3">Delete from Sheets: </h3>
-
-            <div className="delete-input">
-              <Input
-                placeholder={"Enter column name and value..."}
-                btnText={"Delete"}
-                onClick={deleteFromSheets}
-              />
-            </div>
-          </div>
+          <Chart />
         </div>
       </div>
 
@@ -263,7 +238,7 @@ export default function Dashboard() {
       {/* deleting from sheets error modal */}
       <Modal
         title={"Error!"}
-        text={"Input must be comma seperated list: columnName, value"}
+        text={"Already deleted from Sheets"}
         cssClass={`modal-${activeModal === 6 ? "6" : ""}__show`}
         onClick={hideModal}
       />
